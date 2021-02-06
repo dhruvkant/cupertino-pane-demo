@@ -9,16 +9,26 @@ import { CupertinoPane, CupertinoSettings } from "cupertino-pane";
 export class AppComponent implements OnInit {
   name = "Angular " + VERSION.major;
 
-  public carpentinoPane: CupertinoPane;
-
-  ngOnInit(): void {
-    this.carpentinoPane = new CupertinoPane(".cupertino-pane", {
+  private carpentinoPane: CupertinoPane;
+  private cupertinoPaneSettings: CupertinoSettings = {
       parentElement: "body",
       breaks: {
         middle: { enabled: true, height: 200, bounce: true },
         bottom: { enabled: true, height: 80 }
       }
-    });
+    };
+
+  ngOnInit(): void {
+    this.carpentinoPane = new CupertinoPane(".cupertino-pane", this.cupertinoPaneSettings);
+  }
+
+  showPane() {
     this.carpentinoPane.present({ animate: true });
+  }
+
+  destroyPane() {
+    if (this.carpentinoPane.isPanePresented()) {
+      this.carpentinoPane.destroy({ animate: true });
+    }
   }
 }
